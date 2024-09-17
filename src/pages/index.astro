@@ -1,11 +1,183 @@
 ---
 import BaseLayout from "../layout/BaseLayout.astro"
 const pageTitle = "About me";
+import profilePic from "../images/profilfoto.jpg"
+import clogo from "../images/clogo.jpeg"
+import chashtaglogo from "../images/chashtaglogo.jpeg"
+import csslogo from "../images/csslogo.png"
+import htmllogo from "../images/htmllogo.png"
+import javalogo from "../images/javalogo.webp"
+import jslogo from "../images/jslogo.jpeg"
+import kotlinlogo from "../images/kotlinlogo.jpeg"
+
 ---
 
-<BaseLayout pageTitle = pageTitle>
+<BaseLayout  pageTitle = {pageTitle}>
+	<div class="mainContainer">
 
+		<h1>
+			Andreas Islitzer
+		</h1>
 
+		<div class="imgTextContainer">
+			<img src={profilePic.src} alt="A picture of me very nice">
+			<h2>
+				About me
+			</h2>
+			<p class="aboutMeText">
+				Text über mich Test test test 				Text über mich Test test test				Text über mich Test test test				Text über mich Test test test
+			</p>
+		</div>
+		<div class="mySkillsContainer">
+			<h1 class="skillh1">My Skills</h1>
+			<span class="line"></span>
+			<ul class="skillList">
+				<li >
+					<p class="skillListItem">Java</p>
+					<img src={javalogo.src} alt="A picture of me very nice">
+					<div class="skillBarContainer">
+						<div class="skillBar" style="width: 80%; background-color: #3f3f3f;"></div>
+					</div>
+				</li>
+				<li>
+					<p class="skillListItem">JavaScript</p>
+					<div class="skillBarContainer">
+						<div class="skillBar" style="width: 100%;background-color: #3f3f3f;"></div>
+					</div>
+				</li>
+				<li>
+					<p class="skillListItem">Css</p>
+					<div class="skillBarContainer">
+						<div class="skillBar" style="width: 100%;background-color: #3f3f3f;"></div>
+					</div>
+				</li>
+				<li>
+					<p class="skillListItem">Html</p>
+					<div class="skillBarContainer">
+						<div class="skillBar" style="width: 100%;background-color: #3f3f3f;"></div>
+					</div>
+				</li>
+				<li>
+					<p class="skillListItem">Kotlin</p>
+						<div class="skillBarContainer">
+							<div class="skillBar" style="width: 100%;background-color: #3f3f3f;"></div>
+						</div>
+					</li>
+				<li>
+					<p class="skillListItem">C</p>
+					<div class="skillBarContainer">
+						<div class="skillBar" style="width: 100%;background-color: #3f3f3f;"></div>
+					</div>
+				</li>
+				<li>
+					<p class="skillListItem">C#</p>
+					<div class="skillBarContainer">
+						<div class="skillBar" style="width: 100%;background-color: #3f3f3f;"></div>
+					</div>
+				</li>
+
+			</ul>
+		</div>
+
+	</div>
+	
 
 
 </BaseLayout>
+
+<style>
+
+	h1 {
+		font-size: 3em;
+		color: black;
+		margin-bottom: 40px;
+	}
+
+	h2 {
+		font-size: 3em;
+		color:#ffffff;
+		margin-bottom: 40px;
+	}
+
+
+	.mainContainer {
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+		;
+	}
+
+	/*for the img the text and the h2*/ 
+
+	.imgTextContainer {
+		background-color: #3f3f3f;
+		display: inline;
+		border: double 3px #3f3f3f;
+		border-radius: 1em;
+		padding: 5px;
+	}
+
+	.imgTextContainer img {
+		max-height: 500px;
+		max-width: auto;
+		float: left;
+		border-radius: 1em;
+		margin-right: 10px;
+		
+	}
+
+	.aboutMeText {
+		margin-left: 5px;
+	}
+
+	/*for the whole skill List part*/ 
+
+	.mySkillsContainer {
+		margin: 40px;
+		display: flex;		
+		align-items: center;
+		gap: 20px;
+	}
+
+	.skillh1{
+		float: left;
+	}
+
+	.line {
+		display: block;
+		width: 5px;
+		height: 400px;
+		margin-bottom: 10px;
+		background-color: #3f3f3f;
+	}
+
+	.skillList li {
+		display: flex;
+		margin: 10px;
+	}
+
+	.skillList li img {
+		width: 50px;
+		height: 50px ;
+	}
+
+	.skillListItem {
+		color: black;
+		width: 100px;
+	}
+
+	.skillBarContainer {
+		width: 200px; /* Maximale Breite der Leiste */
+		height: 18;
+		background-color: #ddd; /* Hintergrundfarbe der Leiste */
+		border-radius: 5px;
+		margin-top: 5px;
+	}	
+
+	.skillBar {
+		height: 1em;
+		border-radius: 5px;
+	}
+
+
+</style>
