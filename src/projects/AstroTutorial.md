@@ -4,16 +4,16 @@ title: 'Astro tutorial'
 pubDate: 2024-09-18
 description: "This was my first project  with astro"
 images: [
-  "..images/projectImages/astrotutorial/img1.png",
-  "..images/projectImages/astrotutorial/img2.png",
-  "..images/projectImages/astrotutorial/img3.png",
-  "..images/projectImages/astrotutorial/img4.png",
-  "..images/projectImages/astrotutorial/img5.png",
-  "..images/projectImages/astrotutorial/img6.png",
-  "..images/projectImages/astrotutorial/img7.png",
-  "..images/projectImages/astrotutorial/img8.png"
+  "/astrotutorial/img1.png",
+  "/astrotutorial/img2.png",
+  "/astrotutorial/img3.png",
+  "/astrotutorial/img4.png",
+  "/astrotutorial/img5.png",
+  "/astrotutorial/img6.png",
+  "/astrotutorial/img7.png",
+  "/astrotutorial/img8.png"
 ]
-tags: ["Astro", "Web-developement", "Css" ,"Html", "Javascript" ,"Dynamicpaths", "Visualstudio Code"]
+tags: ["Astro", "Web-developement", "Css" ,"Html", "Javascript" ,"Dynamicpaths", "Visualstudio-Code", "md-Files"]
 ---
 
 # My first astro project
