@@ -1,15 +1,16 @@
 ---
 import BaseLayout from "../layout/BaseLayout.astro"
-const pageTitle = "About me";
 import profilePic from "../images/profilfoto.jpg"
-import clogo from "../images/clogo.jpeg"
-import chashtaglogo from "../images/chashtaglogo.jpeg"
+import clogo from "../images/clogo.png"
+import chashtaglogo from "../images/chashtaglogo.png"
 import csslogo from "../images/csslogo.png"
 import htmllogo from "../images/htmllogo.png"
 import javalogo from "../images/javalogo.webp"
-import jslogo from "../images/jslogo.jpeg"
-import kotlinlogo from "../images/kotlinlogo.jpeg"
+import jslogo from "../images/jslogo.png"
+import kotlinlogo from "../images/kotlinlogo.png"
 
+const pageTitle = "About me";
+const maxWidth = 1000;
 ---
 
 <BaseLayout  pageTitle = {pageTitle}>
@@ -25,54 +26,61 @@ import kotlinlogo from "../images/kotlinlogo.jpeg"
 				About me
 			</h2>
 			<p class="aboutMeText">
-				Text über mich Test test test 				Text über mich Test test test				Text über mich Test test test				Text über mich Test test test
+				Hallo! Ich bin 25 Jahre alt und wohne in Ebenthal. Derzeit studiere ich Angewandte Informatik an der Universität Klagenfurt und begeistere mich für alles rund um das Programmieren. In meiner Freizeit vertiefe ich mich gerne in verschiedene Programmiersprachen und arbeite an spannenden Projekten. Meine Leidenschaft für die Informatik treibt mich an, kontinuierlich Neues zu lernen und mein Wissen in der Praxis anzuwenden. Ich freue mich darauf, meine Fähigkeiten weiterzuentwickeln und neue Herausforderungen im Bereich der Softwareentwicklung zu meistern!
 			</p>
 		</div>
+
 		<div class="mySkillsContainer">
 			<h1 class="skillh1">My Skills</h1>
 			<span class="line"></span>
 			<ul class="skillList">
 				<li >
 					<p class="skillListItem">Java</p>
-					<img src={javalogo.src} alt="A picture of me very nice">
+					<img src={javalogo.src} alt="Java Logo">
 					<div class="skillBarContainer">
-						<div class="skillBar" style="width: 80%; background-color: #3f3f3f;"></div>
+						<div class="skillBar" style="width: 80%; background-color: #F8A253;"></div>
 					</div>
 				</li>
 				<li>
 					<p class="skillListItem">JavaScript</p>
+					<img src={jslogo.src} alt="Js Logo">
 					<div class="skillBarContainer">
-						<div class="skillBar" style="width: 100%;background-color: #3f3f3f;"></div>
+						<div class="skillBar" style="width: 35%;background-color: #E3C436;"></div>
 					</div>
 				</li>
 				<li>
 					<p class="skillListItem">Css</p>
+					<img src={csslogo.src} alt="Css Logo">
 					<div class="skillBarContainer">
-						<div class="skillBar" style="width: 100%;background-color: #3f3f3f;"></div>
+						<div class="skillBar" style="width: 45%;background-color: #214CE5;"></div>
 					</div>
 				</li>
 				<li>
 					<p class="skillListItem">Html</p>
+					<img src={htmllogo.src} alt="Html Logo">
 					<div class="skillBarContainer">
-						<div class="skillBar" style="width: 100%;background-color: #3f3f3f;"></div>
+						<div class="skillBar" style="width: 68%;background-color: #000000 ;"></div>
 					</div>
 				</li>
 				<li>
 					<p class="skillListItem">Kotlin</p>
+					<img src={kotlinlogo.src} alt="Kotlin Logo">
 						<div class="skillBarContainer">
-							<div class="skillBar" style="width: 100%;background-color: #3f3f3f;"></div>
+							<div class="skillBar" style="width: 60%;background-color: #F44336;"></div>
 						</div>
 					</li>
 				<li>
 					<p class="skillListItem">C</p>
+					<img src={clogo.src} alt="C Logo">
 					<div class="skillBarContainer">
-						<div class="skillBar" style="width: 100%;background-color: #3f3f3f;"></div>
+						<div class="skillBar" style="width: 45%;background-color: #3949AB;"></div>
 					</div>
 				</li>
 				<li>
 					<p class="skillListItem">C#</p>
+					<img src={chashtaglogo.src} alt="C# Logo">
 					<div class="skillBarContainer">
-						<div class="skillBar" style="width: 100%;background-color: #3f3f3f;"></div>
+						<div class="skillBar" style="width: 40%;background-color: #390091;"></div>
 					</div>
 				</li>
 
@@ -115,6 +123,7 @@ import kotlinlogo from "../images/kotlinlogo.jpeg"
 		border: double 3px #3f3f3f;
 		border-radius: 1em;
 		padding: 5px;
+		max-width: 1000px;
 	}
 
 	.imgTextContainer img {
@@ -133,7 +142,8 @@ import kotlinlogo from "../images/kotlinlogo.jpeg"
 	/*for the whole skill List part*/ 
 
 	.mySkillsContainer {
-		margin: 40px;
+		max-width: 1000px;
+		margin: 100px;
 		display: flex;		
 		align-items: center;
 		gap: 20px;
@@ -146,19 +156,22 @@ import kotlinlogo from "../images/kotlinlogo.jpeg"
 	.line {
 		display: block;
 		width: 5px;
-		height: 400px;
+		height:500px;
 		margin-bottom: 10px;
 		background-color: #3f3f3f;
 	}
 
 	.skillList li {
 		display: flex;
+		justify-content: center;
+		align-items: center;
 		margin: 10px;
 	}
 
 	.skillList li img {
-		width: 50px;
-		height: 50px ;
+		width: 40px;
+		height: 40px ;
+		margin: 5px;
 	}
 
 	.skillListItem {
@@ -167,8 +180,10 @@ import kotlinlogo from "../images/kotlinlogo.jpeg"
 	}
 
 	.skillBarContainer {
+		display: flex;
+		align-items: center;
 		width: 200px; /* Maximale Breite der Leiste */
-		height: 18;
+		height: 1em;
 		background-color: #ddd; /* Hintergrundfarbe der Leiste */
 		border-radius: 5px;
 		margin-top: 5px;
