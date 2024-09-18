@@ -1,0 +1,142 @@
+---
+import BaseLayout from "../layout/BaseLayout.astro"
+
+const pageTitle = "Projects";
+const allProjects = await Astro.glob("../projects/*.md");
+const tags = [...new Set(allProjects.map((project) => project.frontmatter.tags).flat())];
+console.log(allProjects[0].frontmatter.images);
+
+---
+
+<BaseLayout pageTitle = {pageTitle}>
+
+    <div class="tags">
+        {
+          tags.map((tag) => (
+            
+            <p class="tag">{tag}</p>
+          ))
+        }
+    </div>
+
+
+    <div class="search-container">
+        <form action="/search" method="GET">
+          <input type="text" placeholder="Suchbegriff eingeben..." name="search" class="search-input">
+          <button type="submit" class="search-button">Suchen</button>
+        </form>
+    </div>
+
+    <div class="projects-container">
+        <ul>
+            {
+            allProjects.map((project) => (
+                <li > 
+                    { (
+                        <h2>{project.frontmatter.title}</h2>
+                        <img src= {project.frontmatter.images[0].src} alt={project.frontmatter.title || "Project Image"} />
+                        <p>{project.frontmatter.description}</p>
+                    )}
+                </li>
+            ))
+            }
+        </ul>
+    </div>
+
+</BaseLayout>
+
+<style>
+    .search-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .search-input {
+        padding: 10px;
+        font-size: 1.2em;
+        border: 2px solid #ccc;
+        border-radius: 4px 0 0 4px;
+        outline: none;
+        width: 300px; 
+    }
+
+    .search-input:focus {
+        border-color: #007bff;
+    }
+
+    .search-button {
+        padding: 10px;
+        font-size: 1.2em;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 0 4px 4px 0;
+        cursor: pointer;
+    }
+
+    .search-button:hover {
+        background-color: #0056b3;
+    }
+
+    .search-button:active {
+        background-color: #004080;
+    }
+
+    .tags{
+        max-width: 1000px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;   
+    }
+
+    .tag{
+        background-color: #3f3f3f;
+        color: #ffffff;
+        margin: 0.25em;
+        border: dotted 1px #a1a1a1;
+        border-radius: 0.5em;
+        padding: 0.5em 1em;
+        font-size: 1.15em;
+    }
+
+    /*------------------------- project things -------------------------*/ 
+
+    .projects-container {
+        margin: 40px;
+        justify-content: center;
+        align-items: center;
+        max-height: 1000px; /* Adjust as needed */
+        overflow-y: auto;  /* Enables vertical scrolling */
+        border: 1px solid #ccc; /* Optional for visibility */
+        padding: 10px; /* Optional padding */
+    }
+
+    .projects-container ul {
+        max-width: 1000px;
+        list-style: none; /* Remove default list styling */
+        padding: 0;
+        margin: 0;
+    }
+
+    .projects-container li {
+        padding: 10px 0; /* Optional spacing between items */
+    }
+
+    .projects-container p {
+        color: black;
+        font-size: 1.5em;
+    }
+
+    .projects-container p {
+        color: black;
+    }
+
+    .projects-container img {
+        max-width: 100%; /* Ensures the image fits within the container */
+        height: auto; /* Maintain aspect ratio */
+    }
+</style>

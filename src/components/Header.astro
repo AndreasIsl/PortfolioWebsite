@@ -5,7 +5,15 @@ const { pageTitle } = Astro.props;
 ---
 
 <div class="headerContainer">
+
 <h1>{pageTitle}</h1>
+
+<div class = "linkContainer">
+    <a href="/">About</a>
+    <a href="../projects">Projects</a>
+    <a href="../contact">Contact</a>
+</div>
+
     
 
 </div>
@@ -15,10 +23,23 @@ const { pageTitle } = Astro.props;
 
 
     .headerContainer {
+        display: flex;
+        align-items: center;
         background-color: #3f3f3f;
         padding: 20px;
         margin-bottom: 40px;
+        justify-content: space-between;
     }
 
+    a {
+        color: #fff;
+        font-weight: bold;
+        font-size: 2em;
+        margin: 10px;
+    }
+
+    .linkContainer{
+
+    }
     
 </style>
