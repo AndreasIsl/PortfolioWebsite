@@ -1,6 +1,6 @@
 ---
-layout: ../layout/ProjectLayout.astro
-title: 'Astro tutorial'
+layout: ../../layout/ProjectLayout.astro
+title: 'Astro-Tutorial'
 pubDate: 2024-09-18
 description: "This was my first project  with astro"
 images: [
