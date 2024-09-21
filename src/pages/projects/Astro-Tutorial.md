@@ -13,7 +13,7 @@ images: [
   "/astrotutorial/img7.png",
   "/astrotutorial/img8.png"
 ]
-tags: ["Astro", "Web-developement", "Css" ,"Html", "Javascript" ,"Dynamicpaths", "Visualstudio-Code", "md-Files"]
+tags: ["Astro", "Web-developement", "Css" ,"Html", "Javascript" ,"Dynamicpaths", "Visualstudio-Code", "md-Files","Test"]
 ---
 
 # My first astro project

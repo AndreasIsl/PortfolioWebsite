@@ -3,14 +3,12 @@ import BaseLayout from "../layout/BaseLayout.astro"
 
 const pageTitle = "Projects";
 const allProjects = await Astro.glob("../pages/projects/*.md");
-const tags = [...new Set(allProjects.map((project) => project.frontmatter.tags).flat())];
-
-
+let tags = [...new Set(allProjects.map((project) => project.frontmatter.tags).flat())];
 ---
 
 <BaseLayout pageTitle = {pageTitle}>
 
-    <div class="tags">
+    <div class="tags" >
         {
           tags.map((tag) => (
             
@@ -22,43 +20,97 @@ const tags = [...new Set(allProjects.map((project) => project.frontmatter.tags).
 
     <div class="search-container">
         <form action="/search" method="GET">
-          <input type="text" placeholder="Suchbegriff eingeben..." name="search" class="search-input">
-          <button type="submit" class="search-button">Suchen</button>
+          <input type="text" placeholder="Projects..." name="search" class="search-input">
+          <button type="submit" class="search-button">Search</button>
         </form>
     </div>
 
-    <div class="projects-container">
-        <div class="innerProjects-container">
-
-            <ul>
-                {
-                allProjects.map((project) => (
-                    <li class="project-item" >    
-                    { (
-                        <img src= {project.frontmatter.images[0]} alt={project.frontmatter.title || "Project Image"} />
-                        <div class="text-container">
-                            <h2>{project.frontmatter.title}</h2>
-                            <p>{project.frontmatter.description}</p>
-                        </div>
-                        <a class="morebtn" href={`/projects/${project.frontmatter.title}`}>More</a>
-
-                        )}
-                    </li>
-                ))
-                }
-            </ul>
-        </div>
-    </div>
-
+    <ul class="projects-container">
+    {
+        allProjects.map((project) => (
+            <li class="project-item"  data-tags={project.frontmatter.tags.join(",")}>    
+            { (
+                <img src= {project.frontmatter.images[0]} alt={project.frontmatter.title || "Project Image"} />
+                <h2>{project.frontmatter.title}</h2>
+                <p>{project.frontmatter.description}</p>
+                <a class="morebtn" href={`/projects/${project.frontmatter.title}`}>More</a>
+                )}
+            </li>
+        ))
+    }
+    </ul>
 </BaseLayout>
 
+<script>
+    let filteredTags = [];
+    document.addEventListener('DOMContentLoaded', () => {
+    const tagsContainer = document.querySelector('.tags'); // Der Container der Tags
 
+    const tags = document.querySelectorAll('.tag'); // Alle Tag-Elemente
+    
+    const projects = document.querySelectorAll('.project-item'); // Alle Projekt-Elemente
+
+    // Funktion zum Filtern der Projekte basierend auf aktiven Tags
+    function filterProjects() {
+        // Alle aktiven Tags sammeln
+        const activeTags = Array.from(document.querySelectorAll('.tag.active'))
+        .map(tag => (tag as HTMLElement).dataset.tag); // Active Tags
+
+        // Jedes Projekt prüfen
+        projects.forEach((project) => {
+        const projectElement = project as HTMLElement;
+        const projectTags = projectElement.dataset.tags?.split(',') || []; // Tags des Projekts
+        // Prüfen, ob das Projekt eines der aktiven Tags enthält
+        const hasActiveTag = filteredTags.some(tag => projectTags.includes(tag));
+        console.log("-------------------------------------");
+        
+        console.log("has active :" + hasActiveTag);
+        console.log("ProjectTag :" + projectTags);
+        console.log("ActiveTag :" + filteredTags);
+
+
+        // Projekt anzeigen oder verstecken basierend auf der Tag-Übereinstimmung
+        if (filteredTags.length === 0 || hasActiveTag) {
+            // Wenn keine aktiven Tags vorhanden sind, alle anzeigen oder bei Übereinstimmung
+            projectElement.style.display = 'flex'; // Projekt anzeigen
+        } else {
+            projectElement.style.display = 'none'; // Projekt verstecken
+        }
+        });
+    }
+
+    // Event-Listener für jedes Tag hinzufügen
+    tags.forEach(tag => {
+        tag.addEventListener('click', (e) => {
+        const clickedTag = e.target as HTMLElement;
+
+        // Toggle the "active" class
+        clickedTag.classList.toggle('active');
+
+        // Wenn der Tag aktiv ist, es nach vorne verschieben
+        if (clickedTag.classList.contains('active')) {
+            tagsContainer.prepend(clickedTag); // Nach vorne verschieben
+            filteredTags.push(clickedTag.innerText );
+        } else {
+            tagsContainer.append(clickedTag); // Ans Ende verschieben
+            const index = filteredTags.indexOf(clickedTag.innerText);
+            filteredTags.splice(index,1);
+        }
+
+        // Nach jeder Tag-Änderung die Projekte filtern
+        filterProjects();
+        });
+    });
+
+    // Initiale Filterung bei Seitenaufruf
+    filterProjects();
+    });
+
+</script>
    
 <style>
 
-    html, body {
-        overflow: hidden;
-    }
+    
 
 
     .search-container {
@@ -84,19 +136,20 @@ const tags = [...new Set(allProjects.map((project) => project.frontmatter.tags).
     .search-button {
         padding: 10px;
         font-size: 1.2em;
-        background-color: #007bff;
-        color: white;
+        background-color: #eeb713;
+        color: #000000;
+        font-weight: bold;
         border: none;
         border-radius: 0 4px 4px 0;
         cursor: pointer;
     }
 
     .search-button:hover {
-        background-color: #0056b3;
+        background-color: #d0a010;
     }
 
     .search-button:active {
-        background-color: #004080;
+        background-color: #a07b0d;
     }
 
     .tags{
@@ -105,7 +158,8 @@ const tags = [...new Set(allProjects.map((project) => project.frontmatter.tags).
         flex-wrap: wrap;
         align-items: center;
         justify-content: center;
-        margin: 0 auto;   
+        margin: 0 auto;  
+        margin-top: 10px; 
     }
 
     .tag{
@@ -118,66 +172,70 @@ const tags = [...new Set(allProjects.map((project) => project.frontmatter.tags).
         font-size: 1.15em;
     }
 
+    .tag.active {
+      background-color: #eeb713; /* Farbe für aktive Tags */
+      color: #000000;
+      font-weight: bold;
+
+    }
+
     /*------------------------- project things -------------------------*/ 
 
-    .projects-container {
-        margin: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        max-height: 1000px; 
-        padding: 10px;
-    }
+    
 
-    .innerProjects-container {
-        max-width: 1000px;
-        border: 5px solid #3f3f3f; 
-        height: 500px;
-        overflow-y: auto;  /* Enables vertical scrolling */
-    }
+    
 
-    .projects-container ul {
+    .projects-container  {
         padding: 0;
         margin: 0;
-
+        list-style-type: none; 
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        height: wrap;
     }
 
     .projects-container li {
         display: flex;
+        flex-direction: column;
         border: 2px inset #3f3f3f;
-        max-width: 1000px;
         margin-bottom: 10px;
-        height: auto;
+        height: wrap;
+        align-items: center; 
+        max-width: 500px;
+        min-width: 300px;
+        background-color: #3f3f3f;
+        margin: 50px;
+        border-radius: 1em;
+        border: solid 4px #3f3f3f;
+
+
     }
 
     .projects-container p {
-        color: black;
         font-size: 1.5em;
+        margin: 20px;
+        height: 100%;
     }
 
     .projects-container h2 {
-        color: black;
         font-size: 2em;
-
-    }
-
-    .text-container{
-        display: flex;
-        flex-direction: column;
-        margin: 10px;
-        width: 100%;
+        color: #ffffff;
     }
 
     .projects-container img {
+        border-radius: 1em 1em 0em 0em;
         max-height: auto;
-        max-width: 300px; /* Ensures the image fits within the container */
-        height: auto; /* Maintain aspect ratio */
+        min-width: 300px;
+        max-width: 498px; 
+        height: auto; 
     }
 
     .morebtn{
         font-size: 1.5em;
-        color: #ffffff;
-        background-color: #007bff;
+        color: #000000;
+        font-weight: bold;
+        background-color: #eeb713;
         height: fit-content;
         margin: 10px;
         padding: 5px;
@@ -186,12 +244,15 @@ const tags = [...new Set(allProjects.map((project) => project.frontmatter.tags).
 
     }
 
-    @media (max-width: 1330px) {
-
-        html, body {
-        overflow-y: scroll;
-        }  
+    .morebtn:hover {
+        background-color: #d0a010;
     }
+
+    .morebtn :active {
+        background-color: #a07b0d;
+    }
+
+
 
 
 </style>
