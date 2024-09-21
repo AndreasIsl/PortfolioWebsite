@@ -10,29 +10,30 @@ let tags = [...new Set(allProjects.map((project) => project.frontmatter.tags).fl
 
     <div class="tags" >
         {
-          tags.map((tag) => (
-            
+        tags.map((tag) => (
             <p class="tag">{tag}</p>
-          ))
+        ))
         }
     </div>
 
+    <div class="clearTagsBtn-container">
+        <button class="clearTagsBtn">Clear Tags</button>
+    </div>
 
     <div class="search-container">
-        <form action="/search" method="GET">
+        <form class="search-form" >
           <input type="text" placeholder="Projects..." name="search" class="search-input">
-          <button type="submit" class="search-button">Search</button>
         </form>
     </div>
 
     <ul class="projects-container">
     {
         allProjects.map((project) => (
-            <li class="project-item"  data-tags={project.frontmatter.tags.join(",")}>    
+            <li class="project-item"  data-tags={project.frontmatter.tags.join(",")} data-title={project.frontmatter.title} data-description={project.frontmatter.description}>    
             { (
                 <img src= {project.frontmatter.images[0]} alt={project.frontmatter.title || "Project Image"} />
-                <h2>{project.frontmatter.title}</h2>
-                <p>{project.frontmatter.description}</p>
+                <h2 class="project-title">{project.frontmatter.title}</h2>
+                <p  class="project-description">{project.frontmatter.description}</p>
                 <a class="morebtn" href={`/projects/${project.frontmatter.title}`}>More</a>
                 )}
             </li>
@@ -43,12 +44,13 @@ let tags = [...new Set(allProjects.map((project) => project.frontmatter.tags).fl
 
 <script>
     let filteredTags = [];
+    
+
+
     document.addEventListener('DOMContentLoaded', () => {
     const tagsContainer = document.querySelector('.tags'); // Der Container der Tags
-
     const tags = document.querySelectorAll('.tag'); // Alle Tag-Elemente
-    
-    const projects = document.querySelectorAll('.project-item'); // Alle Projekt-Elemente
+    const projects = document.querySelectorAll('.project-item'); // Alle Projekt-Elemente    
 
     // Funktion zum Filtern der Projekte basierend auf aktiven Tags
     function filterProjects() {
@@ -62,14 +64,8 @@ let tags = [...new Set(allProjects.map((project) => project.frontmatter.tags).fl
         const projectTags = projectElement.dataset.tags?.split(',') || []; // Tags des Projekts
         // Prüfen, ob das Projekt eines der aktiven Tags enthält
         const hasActiveTag = filteredTags.some(tag => projectTags.includes(tag));
-        console.log("-------------------------------------");
-        
-        console.log("has active :" + hasActiveTag);
-        console.log("ProjectTag :" + projectTags);
-        console.log("ActiveTag :" + filteredTags);
-
-
-        // Projekt anzeigen oder verstecken basierend auf der Tag-Übereinstimmung
+    
+        // Projekt anzeige oder verstecken basierend auf der Tag-Übereinstimmung
         if (filteredTags.length === 0 || hasActiveTag) {
             // Wenn keine aktiven Tags vorhanden sind, alle anzeigen oder bei Übereinstimmung
             projectElement.style.display = 'flex'; // Projekt anzeigen
@@ -101,17 +97,94 @@ let tags = [...new Set(allProjects.map((project) => project.frontmatter.tags).fl
         filterProjects();
         });
     });
-
+    
     // Initiale Filterung bei Seitenaufruf
     filterProjects();
     });
 
+    const button = document.querySelector('.clearTagsBtn') as HTMLButtonElement;
+    const tagsContainer = document.querySelector('.tags'); // Der Container der Tags
+    console.log(button);
+    
+    button.onclick = function() {
+        const activeTags = Array.from(document.querySelectorAll('.tag.active')); // Active Tags
+        const projects = document.querySelectorAll('.project-item'); // Alle Projekt-Elemente    
+
+        
+        activeTags.forEach((tag) =>{
+            tag.classList.toggle('active');
+            tagsContainer.append(tag); // Ans Ende verschieben
+            const index = filteredTags.indexOf(tag);
+            filteredTags.splice(index,1);
+        })
+
+        projects.forEach((project) => {
+        const projectElement = project as HTMLElement;
+            projectElement.style.display = 'flex'; // Projekt anzeigen
+        }
+    )}
+
+    //search-form
+    document.addEventListener('DOMContentLoaded', () => {
+
+const form = document.querySelector('.search-form');
+const input = form?.querySelector('.search-input') as HTMLInputElement;
+const projects = document.querySelectorAll('.project-item'); // Alle Projekt-Elemente
+
+input.addEventListener('input', () => {  // Verwende 'input' Event für sofortige Reaktion
+    const searchText = input.value.trim();  // Verwende 'value' und trimme Leerzeichen
+
+    if (!searchText) {  // Zeige alle Projekte an, wenn das Suchfeld leer ist
+        projects.forEach((project) => {
+            (project as HTMLElement).style.display = '';
+            // Setze die ursprünglichen Titel und Beschreibungen zurück
+            const titleElement = project.querySelector('.project-title');
+            const descriptionElement = project.querySelector('.project-description');
+            titleElement!.innerHTML = project.getAttribute('data-title')!;
+            descriptionElement!.innerHTML = project.getAttribute('data-description')!;
+        });
+        return;
+    }
+
+    projects.forEach((project) => {
+        const projectElement = project as HTMLElement;
+        const title = project.getAttribute('data-title') || "";
+        const description = project.getAttribute('data-description') || "";
+
+        const titleElement = project.querySelector('.project-title');
+        const descriptionElement = project.querySelector('.project-description');
+                // Prüfe, ob der Suchtext im Titel oder in der Beschreibung enthalten ist
+            if (title.toLowerCase().includes(searchText.toLowerCase()) || 
+                description.toLowerCase().includes(searchText.toLowerCase())) {
+
+                // Erstelle Regex für die Hervorhebung
+                const regex = new RegExp(searchText, 'gi');
+
+                // Ersetze die Suchbegriffe im Titel und in der Beschreibung
+                const highlightedTitle = title.replace(regex, (match) => `<span class="highlight">${match}</span>`);
+                const highlightedDescription = description.replace(regex, (match) => `<span class="highlight">${match}</span>`);
+
+                // Hier setze sicher, dass `innerHTML` verwendet wird, um HTML zu interpretieren.
+                titleElement!.innerHTML = highlightedTitle;
+                descriptionElement!.innerHTML = highlightedDescription;
+
+                // Stelle sicher, dass das Projekt sichtbar bleibt
+                projectElement.style.display = '';
+            } else {
+                // Verstecke das Projekt, wenn der Text nicht passt
+                projectElement.style.display = 'none';
+            }
+            });
+        });
+    });
 </script>
    
 <style>
-
-    
-
+    .highlight{
+        background-color: #eeb713;
+        color: #000000;
+        font-weight: bold;
+    }
 
     .search-container {
         display: flex;
@@ -124,33 +197,16 @@ let tags = [...new Set(allProjects.map((project) => project.frontmatter.tags).fl
         padding: 10px;
         font-size: 1.2em;
         border: 2px solid #ccc;
-        border-radius: 4px 0 0 4px;
+        border-radius: 4px;
         outline: none;
         width: 300px; 
     }
 
     .search-input:focus {
-        border-color: #007bff;
+        border-color: #eeb713;
     }
 
-    .search-button {
-        padding: 10px;
-        font-size: 1.2em;
-        background-color: #eeb713;
-        color: #000000;
-        font-weight: bold;
-        border: none;
-        border-radius: 0 4px 4px 0;
-        cursor: pointer;
-    }
 
-    .search-button:hover {
-        background-color: #d0a010;
-    }
-
-    .search-button:active {
-        background-color: #a07b0d;
-    }
 
     .tags{
         max-width: 1000px;
@@ -177,6 +233,33 @@ let tags = [...new Set(allProjects.map((project) => project.frontmatter.tags).fl
       color: #000000;
       font-weight: bold;
 
+    }
+
+    
+    .clearTagsBtn-container{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 20px;
+    }
+
+    .clearTagsBtn-container button{ 
+        padding: 10px;
+        font-size: 1.2em;
+        background-color: #eeb713; /* Farbe für aktive Tags */
+        color: #000000;
+        font-weight: bold;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .clearTagsBtn-container button:hover{
+        background-color: #d0a010;
+    }
+
+    .clearTagsBtn-container button:active{
+        background-color: #a07b0d;
     }
 
     /*------------------------- project things -------------------------*/ 
