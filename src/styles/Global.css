@@ -1,14 +1,13 @@
 
 
 h1 {
-    color: #fff;
     font-weight: bold;
     font-size: 3em;
 }
 
 p {
-    display: block;
-    color: #fff;
     font-size: 2em;
+    max-width: 1000px;
+    margin: 20px;
 }
 

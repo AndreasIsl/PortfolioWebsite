@@ -14,25 +14,30 @@ const pageTitle = "About me";
 
 <BaseLayout  pageTitle = {pageTitle}>
 	<div class="mainContainer">
-		<div class="intro-container">
-			<h3>Andreas Islitzer</h3>
-			<span class="horizontalline"></span>
-			<div class="adjectiv-container">
-				<h2>UI/UX Designer</h2>
-				<h2>App/Web Developer</h2>
-				<h2>System Engineer</h2>
+		<div class="intro-concontainer">
+			<div class="intro-container">
+				<h3>Andreas Islitzer</h3>
+				<span class="horizontalline"></span>
+				<div class="adjectiv-container">
+					<h2>UI/UX Designer</h2>
+					<h2>App/Web Developer</h2>
+					<h2>System Engineer</h2>
+				</div>
 			</div>
 		</div>
+		
 		
 
 		<div class="imgTextContainer">
 			<img src={profilePic.src} alt="A picture of me very nice">
-			<h2>
-				About me
-			</h2>
-			<p class="aboutMeText">
-				Hallo! Ich bin 25 Jahre alt und wohne in Ebenthal. Derzeit studiere ich Angewandte Informatik an der Universität Klagenfurt und begeistere mich für alles rund um das Programmieren. In meiner Freizeit vertiefe ich mich gerne in verschiedene Programmiersprachen und arbeite an spannenden Projekten. Meine Leidenschaft für die Informatik treibt mich an, kontinuierlich Neues zu lernen und mein Wissen in der Praxis anzuwenden. Ich freue mich darauf, meine Fähigkeiten weiterzuentwickeln und neue Herausforderungen im Bereich der Softwareentwicklung zu meistern!
-			</p>
+			<div class="text-container">
+				<h2>
+					About me
+				</h2>
+				<p class="aboutMeText">
+					Hallo! Ich bin 25 Jahre alt und wohne in Ebenthal. Derzeit studiere ich Angewandte Informatik an der Universität Klagenfurt und begeistere mich für alles rund um das Programmieren. In meiner Freizeit vertiefe ich mich gerne in verschiedene Programmiersprachen und arbeite an spannenden Projekten. Meine Leidenschaft für die Informatik treibt mich an, kontinuierlich Neues zu lernen und mein Wissen in der Praxis anzuwenden. Ich freue mich darauf, meine Fähigkeiten weiterzuentwickeln und neue Herausforderungen im Bereich der Softwareentwicklung zu meistern!
+				</p>
+			</div>
 		</div>
 
 		<div class="mySkillsContainer">
@@ -100,10 +105,18 @@ const pageTitle = "About me";
 
 <style>
 
+	body{
+		background-color: #f9f9f9;
+	}
+
 	h1 {
 		font-size: 3em;
 		color: black;
 		margin-bottom: 40px;
+	}
+
+	p{
+		color: white;
 	}
 
 	h2 {
@@ -120,15 +133,30 @@ const pageTitle = "About me";
 
 	/*Intro things */
 
+	.intro-concontainer{
+		height: 100vh;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: clamp(420,1220,1220 );
+		padding: 20px;
+	}
+
 	.intro-container{
+		width: clamp(400,1200,1200 );
+		height: clamp(400,400,1200 );
+
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
 		gap: 100px;
-		height: 100vh;
+		padding: 30px;
+		box-shadow: 12px 12px 12px rgba(0, 0, 0, 0.1)  , -5px -5px 10px rgb(255, 255, 255) ;
+
 	}
 
+	
 	.intro-container span {
 		background-color: #3f3f3f;
 		width: 100%;
@@ -156,11 +184,16 @@ const pageTitle = "About me";
 
 	.imgTextContainer {
 		background-color: #3f3f3f;
-		display: inline;
+		display: flex;
 		padding-left: 10%;
 		padding-right: 10%;
-		height: 110vh;
+		height: clamp(120vh,120vh,200vh);
 		padding-top: 100px;
+	}
+
+	.textContainer{
+		display: flex;
+		flex-direction: column;
 	}
 
 	.imgTextContainer img {
