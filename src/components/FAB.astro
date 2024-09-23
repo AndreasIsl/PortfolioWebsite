@@ -1,0 +1,53 @@
+---
+
+---
+<button class="fab" id="fabButton">
+    <svg width="50" height="50" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="12,4 4,20 20,20" fill="#ffffff"/>
+</button>
+
+<style>
+    .fab {
+    background-color: #3f3f3f;
+    color: white;
+    border: none;
+    width: 60px;
+    height: 60px;
+    font-size: 32px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 8px;
+    position: fixed; /* bleibt beim Scrollen an der gleichen Stelle */
+    bottom: 20px; /* Abstand vom unteren Rand */
+    right: 20px;
+    }
+
+    .fab:hover {
+        border: 1px solid #eeb713;
+    }
+</style>
+
+<script>
+    document.getElementById('fabButton').addEventListener('click', function() {
+        
+
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    window.addEventListener('scroll', function() {
+    let fab = document.getElementById('fabButton'); // Selektiere den Button mit der ID
+    if (window.scrollY == 0) { // Wenn die Scroll-Position ganz oben ist
+        fab.style.display = 'none'; // Versteckt den Button
+    } else {
+        fab.style.display = 'flex'; // Zeigt den Button, wenn gescrollt wird
+    }
+});
+
+</script>

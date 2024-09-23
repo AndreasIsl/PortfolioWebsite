@@ -8,6 +8,7 @@ import htmllogo from "../images/htmllogo.png"
 import javalogo from "../images/javalogo.webp"
 import jslogo from "../images/jslogo.png"
 import kotlinlogo from "../images/kotlinlogo.png"
+import FAB from "../components/FAB.astro"
 
 const pageTitle = "About me";
 ---
@@ -39,7 +40,6 @@ const pageTitle = "About me";
 				</p>
 			</div>
 		</div>
-
 		<div class="mySkillsContainer">
 			<h1 class="skillh1">My Skills</h1>
 			<span class="line"></span>
@@ -104,6 +104,8 @@ const pageTitle = "About me";
 </BaseLayout>
 
 <style>
+
+	
 
 	body{
 		background-color: #f9f9f9;
@@ -194,7 +196,10 @@ const pageTitle = "About me";
 	.textContainer{
 		display: flex;
 		flex-direction: column;
+		justify-content: center;
+		align-items: center;
 	}
+
 
 	.imgTextContainer img {
 		margin: 20px;
@@ -216,7 +221,7 @@ const pageTitle = "About me";
 
 	.mySkillsContainer {
 		max-width: 1000px;
-		margin: 200px;
+		margin: 100px;
 		display: flex;		
 		align-items: center;
 		gap: 20px;
