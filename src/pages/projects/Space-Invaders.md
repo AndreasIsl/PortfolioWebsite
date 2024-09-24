@@ -10,7 +10,6 @@ images: [
   "/spaceInvaders/img4.jpg",
   "/spaceInvaders/img5.jpg",
   "/spaceInvaders/img6.jpg",
-  
 ]
 tags: ["App-developement", "Java" ,"Androidstudio", "View-binding", "Data-binding", "Viewmodel"]
 gitLink: "https://github.com/AndreasIsl/AstroTutorial"

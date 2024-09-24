@@ -1,6 +1,10 @@
 ---
 import BaseLayout from "../layout/BaseLayout.astro"
 import logo from "/public/mylogo.png"
+import linklogo from "/public/linklogog.png"
+import gitlogo from "/public/gitlogo.png"
+import gmaillogo from "/public/gmaillogo.png"
+
 const pageTitle = "Contact";
 ---
 
@@ -12,9 +16,9 @@ const pageTitle = "Contact";
         <h1>How to contact me</h1>
         <div class="contact">
             <div class="link-container">
-                <a href="https://github.com/AndreasIsl/Veranstaltungen" ><img src='/public/gitlogo.png' draggable="false"></a>
-                <a href="https://www.linkedin.com/in/andreas-islitzer-4052632b1/"><img src='/public/linklogo.png'draggable="false"></a>
-                <a href="mailto:andreas.islitzer1@gmail.com"><img src="/public/gmaillogo.png" alt="its a gmail logo its fantastic"></a>
+                <a href="https://github.com/AndreasIsl/Veranstaltungen" ><img src={gitlogo.src} draggable="false"></a>
+                <a href="https://www.linkedin.com/in/andreas-islitzer-4052632b1/"><img src={linklogo.src} draggable="false"></a>
+                <a href="mailto:andreas.islitzer1@gmail.com"><img src={gmaillogo.src} alt="its a gmail logo its fantastic"></a>
             </div>
             
 
