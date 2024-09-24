@@ -10,8 +10,7 @@ const { frontmatter } = Astro.props;
   <div class="titlecontainer">
     <h1>{frontmatter.title}</h1>
   </div>
-
-  <div class="main-container">
+  <div class="main-container" data-screen={frontmatter.screen}>  
     <div class="slideshow-container">
         {
           frontmatter.images.map((image) =>
@@ -20,8 +19,9 @@ const { frontmatter } = Astro.props;
             )
           )
         }
-  
     </div>
+    <p class="swipe-text">Swipe left for more</p>
+
   </div>
 
   <div class="text-container">
@@ -33,11 +33,30 @@ const { frontmatter } = Astro.props;
 </BaseLayout>
 
 <script>
-  
-  const slider = document.querySelector('.slideshow-container');
+  const sliderContainer = document.querySelector('.main-container');
+  const slider = document.querySelector('.slideshow-container') as HTMLBaseElement;
+  const slideim = document.querySelectorAll('.sliderimage');
+
+  const img =  document.querySelector('.sliderimage img') as HTMLImageElement;
+  const screen = sliderContainer.getAttribute('data-screen') || "";
+
+    if(screen == "phone"){
+      slider.style.width = "450px"
+      slider.style.height = "1000px"
+      img.style.width = "450px"
+      img.style.height = "1000px"
+      slideim.forEach((element: HTMLElement) => {
+        element.style.width = "450px";
+        element.style.height = "1000px";
+      });
+    }
+
+
   let isDown = false;
   let startX;
   let scrollLeft;
+
+  const infoText = document.querySelector('.swipe-text') as HTMLElement;
 
   slider.addEventListener('mousedown', (e :MouseEvent) => {
     isDown = true;
@@ -62,6 +81,7 @@ const { frontmatter } = Astro.props;
     const x = e.clientX; // Get the current X position of the mouse
     const walk = (x - startX) * 3 ; // Multiply for scroll speed
     slider.scrollLeft = scrollLeft - walk;
+    infoText.style.opacity = "0"; 
   });
 </script>
 
@@ -76,13 +96,22 @@ const { frontmatter } = Astro.props;
  
 }
 
-
+.swipe-text{
+  background-color: #eeb713;
+  color: #3f3f3f;
+  padding: 5px;
+  border-radius: 15px;
+  font-weight: bold;
+  opacity: 1; /* Start mit voller Sichtbarkeit */
+  transition: opacity 1s ease-in-out; /* Übergangseffekt für das Ausblenden */
+}
   
 .main-container{
   margin: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 /* Slideshow container */
@@ -95,42 +124,7 @@ const { frontmatter } = Astro.props;
   cursor: grab;
   scroll-behavior: smooth;
   scrollbar-width: none;   
-}
 
-@property --angle{
-  syntax: "<angle>";
-    initial-value: 0deg;
-    inherits: false;
-}
-
-.slideshow-container::after, .slideshow-container::before{
-  content: '';
-  position:absolute;
-  height: 600px;
-  width: 1000px;
-  background-image: conic-gradient(from var(--angle), #eeb713, #3f3f3f,#eeb713,#3f3f3f);
-  top: 62.5%;
-  left: 50%;
-  translate: -50% -50%;
-  z-index: -1;
-  padding: 3px;
-  border-radius: 10px;
-  animation: 3s spin linear infinite;
-}
-
-@keyframes spin{
-  from{
-    --angle:0deg;
-  }
-  to{
-    --angle: 360deg;
-  }
-
-}
-
-.slideshow-container::before{
-  filter: blur(1.5rem);
-  opacity: 0.5;
 }
 
 
@@ -144,11 +138,11 @@ const { frontmatter } = Astro.props;
 }
 
 .sliderimage *{
-  width:1000px;
   box-sizing: border-box;
   padding: 20px 30px;
   flex-shrink: 0;
   border-radius: 14px;
+  max-height: 1000px ;
 }
 
 p{color: black;}

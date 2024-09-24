@@ -1,9 +1,89 @@
 ---
 import BaseLayout from "../layout/BaseLayout.astro"
-
+import logo from "/public/mylogo.png"
 const pageTitle = "Contact";
 ---
 
 <BaseLayout pageTitle = {pageTitle}>
-    
+    <div class="main-container">
+        <div class="image-container">
+            <img src={logo.src}>
+        </div>
+        <h1>How to contact me</h1>
+        <div class="contact">
+            <div class="link-container">
+                <a href="https://github.com/AndreasIsl/Veranstaltungen" ><img src='/public/gitlogo.png' draggable="false"></a>
+                <a href="https://www.linkedin.com/in/andreas-islitzer-4052632b1/"><img src='/public/linklogo.png'draggable="false"></a>
+                <a href="mailto:andreas.islitzer1@gmail.com"><img src="/public/gmaillogo.png" alt="its a gmail logo its fantastic"></a>
+            </div>
+            
+
+        </div>
+
+
+
+    </div>
 </BaseLayout>
+
+<style>
+
+    body{
+		background-color: #f9f9f9;
+	}
+
+    .main-container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 20px;
+    }
+
+    .image-container{
+        margin: 20px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 30px;
+        box-shadow: 12px 12px 12px rgba(0, 0, 0, 0.1) inset  , -5px -5px 10px rgb(255, 255, 255) inset ;
+
+    }
+
+
+    .link-container *{
+        background-color: #f9f9f9;
+        width: 100px;
+        height: 100px;
+    }
+
+    .link-container{
+        display: flex;
+        gap: 50px;
+        justify-content: center;
+        align-items: center;
+    }
+
+ 
+    
+    .contact{
+        margin: 121px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+    }
+
+    .form-container{
+        display: flex;
+        margin: 30px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .form-container img{
+        width: 60px;
+        height: 50px;
+    }
+
+
+</style>

@@ -10,9 +10,9 @@ images: [
   "/events/img4.png"
 ]
 tags: ["Astro", "Web-developement", "Css" ,"Html", "Javascript" ,"Dynamicpaths", "Visualstudio-Code","Databases","Data-Interface"]
+gitLink: "https://github.com/AndreasIsl/Veranstaltungen"
+
 ---
 
-# Filler Text
-Filler TextFiller TextFiller TextFiller TextFiller TextFiller TextFiller TextFiller Text
-Filler TextFiller TextFiller TextFiller TextFiller TextFiller TextFiller TextFiller Text
-Filler TextFiller TextFiller TextFiller TextFiller TextFiller TextFiller TextFiller Text
+# Comming soon last update 24.09.2024
+
