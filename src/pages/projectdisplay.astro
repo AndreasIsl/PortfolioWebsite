@@ -52,10 +52,6 @@ let tags = [...new Set(allProjects.map((project) => project.frontmatter.tags).fl
 
     // Funktion zum Filtern der Projekte basierend auf aktiven Tags
     function filterProjects() {
-        // Alle aktiven Tags sammeln
-        const activeTags = Array.from(document.querySelectorAll('.tag.active'))
-        .map(tag => (tag as HTMLElement).dataset.tag); // Active Tags
-
         // Jedes Projekt prüfen
         projects.forEach((project) => {
         const projectElement = project as HTMLElement;
@@ -77,7 +73,8 @@ let tags = [...new Set(allProjects.map((project) => project.frontmatter.tags).fl
     tags.forEach(tag => {
         tag.addEventListener('click', (e) => {
         const clickedTag = e.target as HTMLElement;
-
+        console.log("click");
+        
         // Toggle the "active" class
         clickedTag.classList.toggle('active');
 
@@ -125,24 +122,24 @@ let tags = [...new Set(allProjects.map((project) => project.frontmatter.tags).fl
     //search-form
     document.addEventListener('DOMContentLoaded', () => {
 
-const form = document.querySelector('.search-form');
-const input = form?.querySelector('.search-input') as HTMLInputElement;
-const projects = document.querySelectorAll('.project-item'); // Alle Projekt-Elemente
+    const form = document.querySelector('.search-form');
+    const input = form?.querySelector('.search-input') as HTMLInputElement;
+    const projects = document.querySelectorAll('.project-item'); // Alle Projekt-Elemente
 
-input.addEventListener('input', () => {  // Verwende 'input' Event für sofortige Reaktion
-    const searchText = input.value.trim();  // Verwende 'value' und trimme Leerzeichen
+    input.addEventListener('input', () => {  // Verwende 'input' Event für sofortige Reaktion
+        const searchText = input.value.trim();  // Verwende 'value' und trimme Leerzeichen
 
-    if (!searchText) {  // Zeige alle Projekte an, wenn das Suchfeld leer ist
-        projects.forEach((project) => {
-            (project as HTMLElement).style.display = '';
-            // Setze die ursprünglichen Titel und Beschreibungen zurück
-            const titleElement = project.querySelector('.project-title');
-            const descriptionElement = project.querySelector('.project-description');
-            titleElement!.innerHTML = project.getAttribute('data-title')!;
-            descriptionElement!.innerHTML = project.getAttribute('data-description')!;
-        });
-        return;
-    }
+        if (!searchText) {  // Zeige alle Projekte an, wenn das Suchfeld leer ist
+            projects.forEach((project) => {
+                (project as HTMLElement).style.display = '';
+                // Setze die ursprünglichen Titel und Beschreibungen zurück
+                const titleElement = project.querySelector('.project-title');
+                const descriptionElement = project.querySelector('.project-description');
+                titleElement!.innerHTML = project.getAttribute('data-title')!;
+                descriptionElement!.innerHTML = project.getAttribute('data-description')!;
+            });
+            return;
+        }
 
     projects.forEach((project) => {
         const projectElement = project as HTMLElement;
