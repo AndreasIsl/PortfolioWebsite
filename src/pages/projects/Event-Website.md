@@ -11,7 +11,7 @@ images: [
 ]
 tags: ["Astro", "Web-developement", "Css" ,"Html", "Javascript" ,"Dynamicpaths", "Visualstudio-Code","Databases","Data-Interface"]
 gitLink: "https://github.com/AndreasIsl/Veranstaltungen"
-
+screen: "-"
 ---
 
 # Comming soon last update 24.09.2024

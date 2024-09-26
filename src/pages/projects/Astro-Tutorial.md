@@ -15,6 +15,7 @@ images: [
 ]
 tags: ["Astro", "Web-developement", "Css" ,"Html", "Javascript" ,"Dynamicpaths", "Visualstudio-Code", "md-Files"]
 gitLink: "https://github.com/AndreasIsl/AstroTutorial"
+screen: "-"
 ---
 
 # My first astro project
