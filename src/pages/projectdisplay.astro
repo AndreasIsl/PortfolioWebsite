@@ -26,20 +26,20 @@ let tags = [...new Set(allProjects.map((project) => project.frontmatter.tags).fl
         </form>
     </div>
 
-    <ul class="projects-container">
+    <div class="projects-container">
     {
         allProjects.map((project) => (
-            <li class="project-item"  data-tags={project.frontmatter.tags.join(",")} data-title={project.frontmatter.title} data-description={project.frontmatter.description}>    
+            <div class="project-item"  data-tags={project.frontmatter.tags.join(",")} data-title={project.frontmatter.title} data-description={project.frontmatter.description}>    
             { (
                 <img src= {project.frontmatter.images[0]} alt={project.frontmatter.title || "Project Image"} />
                 <h2 class="project-title">{project.frontmatter.title}</h2>
                 <p  class="project-description">{project.frontmatter.description}</p>
                 <a class="morebtn" href={`/projects/${project.frontmatter.title}`}>More</a>
                 )}
-            </li>
+            </div>
         ))
     }
-    </ul>
+    </div>
 </BaseLayout>
 
 <script>
@@ -282,15 +282,18 @@ input.addEventListener('input', () => {  // Verwende 'input' Event für sofortig
 
     .projects-container  {
         padding: 0;
-        margin: 0;
+        margin-top: 30px;
         list-style-type: none; 
         display: flex;
+        align-items: center;
+        justify-items: center;
         flex-wrap: wrap;
-        justify-content: space-between;
-        height: wrap;
+        justify-content: space-evenly;
+        row-gap: 40px;
+        column-gap: 40px;
     }
 
-    .projects-container li {
+    .projects-container div {
         display: flex;
         flex-direction: column;
         border: 2px inset #3f3f3f;
@@ -300,7 +303,6 @@ input.addEventListener('input', () => {  // Verwende 'input' Event für sofortig
         max-width: 500px;
         min-width: 300px;
         background-color: #3f3f3f;
-        margin: 50px;
         border-radius: 1em;
         border: solid 4px #3f3f3f;
 
