@@ -45,8 +45,6 @@ let tags = [...new Set(allProjects.map((project) => project.frontmatter.tags).fl
 <script>
     let filteredTags = [];
     
-
-
     document.addEventListener('DOMContentLoaded', () => {
     const tagsContainer = document.querySelector('.tags'); // Der Container der Tags
     const tags = document.querySelectorAll('.tag'); // Alle Tag-Elemente
