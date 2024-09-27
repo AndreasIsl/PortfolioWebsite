@@ -43,119 +43,116 @@ let tags = [...new Set(allProjects.map((project) => project.frontmatter.tags).fl
 </BaseLayout>
 
 <script>
-    let filteredTags = [];
     
     document.addEventListener('DOMContentLoaded', () => {
-    const tagsContainer = document.querySelector('.tags'); // Der Container der Tags
-    const tags = document.querySelectorAll('.tag'); // Alle Tag-Elemente
-    const projects = document.querySelectorAll('.project-item'); // Alle Projekt-Elemente    
+        let filteredTags = [];
+        const tagsContainer = document.querySelector('.tags'); // Der Container der Tags
+        const tags = document.querySelectorAll('.tag'); // Alle Tag-Elemente
+        const projects = document.querySelectorAll('.project-item'); // Alle Projekt-Elemente    
+        const form = document.querySelector('.search-form');
+        const input = form?.querySelector('.search-input') as HTMLInputElement;
+        const button = document.querySelector('.clearTagsBtn') as HTMLButtonElement;
+        const activeTags = Array.from(document.querySelectorAll('.tag.active')); // Active Tags
 
-    // Funktion zum Filtern der Projekte basierend auf aktiven Tags
-    function filterProjects() {
-        // Jedes Projekt prüfen
-        projects.forEach((project) => {
-        const projectElement = project as HTMLElement;
-        const projectTags = projectElement.dataset.tags?.split(',') || []; // Tags des Projekts
-        // Prüfen, ob das Projekt eines der aktiven Tags enthält
-        const hasActiveTag = filteredTags.some(tag => projectTags.includes(tag));
-    
-        // Projekt anzeige oder verstecken basierend auf der Tag-Übereinstimmung
-        if (filteredTags.length === 0 || hasActiveTag) {
-            // Wenn keine aktiven Tags vorhanden sind, alle anzeigen oder bei Übereinstimmung
-            projectElement.style.display = 'flex'; // Projekt anzeigen
-        } else {
-            projectElement.style.display = 'none'; // Projekt verstecken
+
+        // Funktion zum Filtern der Projekte basierend auf aktiven Tags
+        function filterProjects() {
+            // Jedes Projekt prüfen
+            projects.forEach((project) => {
+            const projectElement = project as HTMLElement;
+            const projectTags = projectElement.dataset.tags?.split(',') || []; // Tags des Projekts
+            // Prüfen, ob das Projekt eines der aktiven Tags enthält
+            const hasActiveTag = filteredTags.some(tag => projectTags.includes(tag));
+        
+            // Projekt anzeige oder verstecken basierend auf der Tag-Übereinstimmung
+            if (filteredTags.length === 0 || hasActiveTag) {
+                // Wenn keine aktiven Tags vorhanden sind, alle anzeigen oder bei Übereinstimmung
+                projectElement.style.display = 'flex'; // Projekt anzeigen
+            } else {
+                projectElement.style.display = 'none'; // Projekt verstecken
+            }
+            });
         }
+
+        // Event-Listener für jedes Tag hinzufügen
+        tags.forEach(tag => {
+            tag.addEventListener('click', (e) => {
+            const clickedTag = e.target as HTMLElement;
+            console.log("click");
+            
+            // Toggle the "active" class
+            clickedTag.classList.toggle('active');
+
+            //If tag is active move it to the front
+            if (clickedTag.classList.contains('active')) {
+                tagsContainer.prepend(clickedTag); 
+                filteredTags.push(clickedTag.innerText );
+            } else {
+                tagsContainer.append(clickedTag); 
+                const index = filteredTags.indexOf(clickedTag.innerText);
+                filteredTags.splice(index,1);
+            }
+
+            // After every change
+            filterProjects();
+            });
         });
+        
+        //Initial filtering
+        filterProjects();
+
+        //------ClearTagsButton-------
+        console.log(button);
+    
+        button.onclick = function() {
+            activeTags.forEach((tag) =>{
+                tag.classList.toggle('active');
+                tagsContainer.append(tag); // Ans Ende verschieben
+                const index = filteredTags.indexOf(tag);
+                filteredTags.splice(index,1);
+            })
+
+            projects.forEach((project) => {
+            const projectElement = project as HTMLElement;
+                projectElement.style.display = 'flex'; // Projekt anzeigen
+            }
+        )   
     }
 
-    // Event-Listener für jedes Tag hinzufügen
-    tags.forEach(tag => {
-        tag.addEventListener('click', (e) => {
-        const clickedTag = e.target as HTMLElement;
-        console.log("click");
-        
-        // Toggle the "active" class
-        clickedTag.classList.toggle('active');
-
-        // Wenn der Tag aktiv ist, es nach vorne verschieben
-        if (clickedTag.classList.contains('active')) {
-            tagsContainer.prepend(clickedTag); // Nach vorne verschieben
-            filteredTags.push(clickedTag.innerText );
-        } else {
-            tagsContainer.append(clickedTag); // Ans Ende verschieben
-            const index = filteredTags.indexOf(clickedTag.innerText);
-            filteredTags.splice(index,1);
-        }
-
-        // Nach jeder Tag-Änderung die Projekte filtern
-        filterProjects();
-        });
-    });
-    
-    // Initiale Filterung bei Seitenaufruf
-    filterProjects();
-    });
-
-    const button = document.querySelector('.clearTagsBtn') as HTMLButtonElement;
-    const tagsContainer = document.querySelector('.tags'); // Der Container der Tags
-    console.log(button);
-    
-    button.onclick = function() {
-        const activeTags = Array.from(document.querySelectorAll('.tag.active')); // Active Tags
-        const projects = document.querySelectorAll('.project-item'); // Alle Projekt-Elemente    
-
-        
-        activeTags.forEach((tag) =>{
-            tag.classList.toggle('active');
-            tagsContainer.append(tag); // Ans Ende verschieben
-            const index = filteredTags.indexOf(tag);
-            filteredTags.splice(index,1);
-        })
-
-        projects.forEach((project) => {
-        const projectElement = project as HTMLElement;
-            projectElement.style.display = 'flex'; // Projekt anzeigen
-        }
-    )}
-
     //search-form
-    document.addEventListener('DOMContentLoaded', () => {
-
-    const form = document.querySelector('.search-form');
-    const input = form?.querySelector('.search-input') as HTMLInputElement;
-    const projects = document.querySelectorAll('.project-item'); // Alle Projekt-Elemente
-
-    input.addEventListener('input', () => {  // Verwende 'input' Event für sofortige Reaktion
-        const searchText = input.value.trim();  // Verwende 'value' und trimme Leerzeichen
-
-        if (!searchText) {  // Zeige alle Projekte an, wenn das Suchfeld leer ist
-            projects.forEach((project) => {
-                (project as HTMLElement).style.display = '';
-                // Setze die ursprünglichen Titel und Beschreibungen zurück
-                const titleElement = project.querySelector('.project-title');
-                const descriptionElement = project.querySelector('.project-description');
-                titleElement!.innerHTML = project.getAttribute('data-title')!;
-                descriptionElement!.innerHTML = project.getAttribute('data-description')!;
-            });
+    input.addEventListener('input', () => { 
+        const searchText = input.value.trim();
+        
+        if (!searchText) {  
             return;
         }
 
-    projects.forEach((project) => {
-        const projectElement = project as HTMLElement;
-        const title = project.getAttribute('data-title') || "";
-        const description = project.getAttribute('data-description') || "";
-
-        const titleElement = project.querySelector('.project-title');
-        const descriptionElement = project.querySelector('.project-description');
+        projects.forEach((project) => {
+            const projectElement = project as HTMLElement;
+            const title = project.getAttribute('data-title') || "";
+            const description = project.getAttribute('data-description') || "";
+            const titleElement = project.querySelector('.project-title');
+            const descriptionElement = project.querySelector('.project-description');
                 // Prüfe, ob der Suchtext im Titel oder in der Beschreibung enthalten ist
+
+                if(titleElement == null){
+                    console.log("titleElement is null or undefined");
+                }
+                if(descriptionElement == null){
+                    console.log("descriptionElement is null or undefined");
+                }
+                if(title == null){
+                    console.log("title is null or undefined");
+                }
+                if(description == null){
+                    console.log("description is null or undefined");
+                }
+
             if (title.toLowerCase().includes(searchText.toLowerCase()) || 
                 description.toLowerCase().includes(searchText.toLowerCase())) {
 
-                // Erstelle Regex für die Hervorhebung
+                //replace the text trough the regex doesent work TODO
                 const regex = new RegExp(searchText, 'gi');
-
-                // Ersetze die Suchbegriffe im Titel und in der Beschreibung
                 const highlightedTitle = title.replace(regex, (match) => `<span class="highlight">${match}</span>`);
                 const highlightedDescription = description.replace(regex, (match) => `<span class="highlight">${match}</span>`);
 
@@ -164,13 +161,14 @@ let tags = [...new Set(allProjects.map((project) => project.frontmatter.tags).fl
                 descriptionElement!.innerHTML = highlightedDescription;
 
                 // Stelle sicher, dass das Projekt sichtbar bleibt
-                projectElement.style.display = '';
+                projectElement.style.display = 'flex';
             } else {
                 // Verstecke das Projekt, wenn der Text nicht passt
                 projectElement.style.display = 'none';
             }
             });
         });
+
     });
 </script>
    
