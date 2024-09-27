@@ -32,13 +32,16 @@ const { frontmatter } = Astro.props;
 </div>
 </BaseLayout>
 
-<script>
+<script >
   const sliderContainer = document.querySelector('.main-container');
   const slider = document.querySelector('.slideshow-container') as HTMLBaseElement;
   const slideim = document.querySelectorAll('.sliderimage');
-
   const img =  document.querySelector('.sliderimage img') as HTMLImageElement;
-  const screen = sliderContainer.getAttribute('data-screen') || "";
+  let screen = sliderContainer.getAttribute('data-screen');
+  
+  if(screen == null){
+    screen = "not phone";
+  }
 
     if(screen == "phone"){
       slider.style.width = "450px"

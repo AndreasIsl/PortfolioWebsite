@@ -65,21 +65,22 @@ let tags = [...new Set(allProjects.map((project) => project.frontmatter.tags).fl
             //Initial filtering
             filterProjects();
 
+
             //------ClearTagsButton-------
+            button.onclick = function() {                
+                filteredTags.forEach((tag) =>{
+                    tags.forEach(tagAll => {
+                        if(tagAll.innerText == tag){
+                            tagAll.classList.toggle('active');
+                            tagsContainer.append(tagAll); // Ans Ende verschieben
+                        }
+                    });
 
-            button.onclick = function() {
-                console.log(activeTags);
-                
-                activeTags.forEach((tag) =>{
-                    tag.classList.toggle('active');
-                    console.log(tag.className);
-                    
-
-                    tagsContainer.append(tag); // Ans Ende verschieben
                     const index = filteredTags.indexOf(tag);
                     filteredTags.splice(index,1);
                 })
-                console.log(activeTags);
+
+                input.value ="";
 
                 projects.forEach((project) => {
                 const projectElement = project;
