@@ -45,6 +45,8 @@ let tags = [...new Set(allProjects.map((project) => project.frontmatter.tags).fl
 <script>
     
     document.addEventListener('DOMContentLoaded', () => {
+        console.log("domcontent is loaded");
+        
         let filteredTags = [];
         const tagsContainer = document.querySelector('.tags'); // Der Container der Tags
         const tags = document.querySelectorAll('.tag'); // Alle Tag-Elemente
@@ -55,21 +57,21 @@ let tags = [...new Set(allProjects.map((project) => project.frontmatter.tags).fl
         const activeTags = Array.from(document.querySelectorAll('.tag.active')); // Active Tags
 
 
-        // Funktion zum Filtern der Projekte basierend auf aktiven Tags
+        // Function to filter tags
         function filterProjects() {
-            // Jedes Projekt prüfen
+            // Look at every project
             projects.forEach((project) => {
             const projectElement = project as HTMLElement;
             const projectTags = projectElement.dataset.tags?.split(',') || []; // Tags des Projekts
-            // Prüfen, ob das Projekt eines der aktiven Tags enthält
+            // Look if a project has any active tags
             const hasActiveTag = filteredTags.some(tag => projectTags.includes(tag));
         
-            // Projekt anzeige oder verstecken basierend auf der Tag-Übereinstimmung
+            // Display or hide tags
             if (filteredTags.length === 0 || hasActiveTag) {
-                // Wenn keine aktiven Tags vorhanden sind, alle anzeigen oder bei Übereinstimmung
-                projectElement.style.display = 'flex'; // Projekt anzeigen
+                projectElement.style.display = 'flex'; // show project  
             } else {
-                projectElement.style.display = 'none'; // Projekt verstecken
+                projectElement.style.display = 'none'; // 
+                 project 
             }
             });
         }
