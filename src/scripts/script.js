@@ -1,5 +1,6 @@
 
-    
+    console.log("domcontent is not loaded");
+
 document.addEventListener('DOMContentLoaded', () => {
     console.log("domcontent is loaded");
     
