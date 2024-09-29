@@ -135,18 +135,15 @@ const pageTitle = "About me";
 	/*Intro things */
 
 	.intro-concontainer{
-		height: 100vh;
+		min-height: 100vh;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		width: clamp(420,1220,1220 );
 		padding: 20px;
 	}
 
 	.intro-container{
-		width: clamp(400,1200,1200 );
 		height: clamp(400,400,1200 );
-
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -188,10 +185,33 @@ const pageTitle = "About me";
 		display: flex;
 		padding-left: 10%;
 		padding-right: 10%;
-		height: clamp(120vh,120vh,200vh);
 		padding-top: 100px;
+		min-height: 110vh;
+		gap: 30px;
 	}
 
+	@media only screen and (max-width: 1000px) {
+
+		.intro-container{
+			flex-direction: row;
+		}
+
+		.intro-container span {
+			background-color: #3f3f3f;
+			width: 5px;
+			height:  100vh;
+			display: block;
+		}
+		
+		.adjectiv-container{
+			flex-direction: column;
+
+		}
+
+		.imgTextContainer {
+			flex-direction: column;
+		}
+	}
 	.textContainer{
 		display: flex;
 		flex-direction: column;
